@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
-
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 function Slider() {
     const [upcomingMovies, setUpcomingMovies] = useState([]);
 
@@ -12,7 +12,7 @@ function Slider() {
     },[])
 
     const sliderStyle ={
-        //backgroundImage:`url(${import.meta.env.VITE_API_BASE_IMAGE}${})`
+        backgroundImage:`url(${import.meta.env.VITE_API_BASE_IMAGE}${upcomingMovies[0]?.backdrop_path})`,
         backgroundSize:"cover",
         backgroundPosition:"center",
         backgroundRepeat:"no-repeat",
@@ -23,7 +23,7 @@ function Slider() {
 
     };
   return (
-    <div>Slider</div>
+    <div style={sliderStyle}>Slider</div>
   )
 }
 
