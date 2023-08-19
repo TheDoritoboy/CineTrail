@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import "./slider.css"
 function Slider() {
     const [upcomingMovies, setUpcomingMovies] = useState([]);
-
+    const [index, setIndex] = useState(0);
+    
     useEffect(()=>{
         axios(`${import.meta.env.VITE_API_BASE_URL}upcoming?api_key=${import.meta.env.VITE_APP_API_KEY}`)
         .then(res=>{console.log(res.data.results);
@@ -12,7 +14,7 @@ function Slider() {
     },[])
 
     const sliderStyle ={
-        backgroundImage:`url(${import.meta.env.VITE_API_BASE_IMAGE}${upcomingMovies[0]?.backdrop_path})`,
+        backgroundImage:`url(${import.meta.env.VITE_API_BASE_IMAGE}${upcomingMovies[index]?.backdrop_path})`,
         backgroundSize:"cover",
         backgroundPosition:"center",
         backgroundRepeat:"no-repeat",
@@ -22,8 +24,32 @@ function Slider() {
         zIndex:0
 
     };
+
+    const nextSlide = ()=>
+     {
+      if(index === upcomingMovies.length -1)
+      {
+        setIndex(0);
+      } 
+      else
+      {
+        ()=>setIndex((prevState) => prevState + 1)
+      }
+    
+    }
+
+    const prevSlide = ()=>
+    {
+      ()=>setIndex((prevState) => prevState - 1)
+    }
+
   return (
-    <div style={sliderStyle}>Slider</div>
+    <div style={sliderStyle}>
+    
+    <div className="slider-overlay"></div>
+    <MdKeyboardArrowLeft className='left-arrow' onClick={prevSlide}/>
+    <MdKeyboardArrowRight className='right-arrow' onClick={nextSlide}/>
+    </div>
   )
 }
 
