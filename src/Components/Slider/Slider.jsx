@@ -26,21 +26,27 @@ function Slider() {
     };
 
     const nextSlide = ()=>
-     {
+    {
       if(index === upcomingMovies.length -1)
       {
         setIndex(0);
-      } 
+      }
       else
       {
-        ()=>setIndex((prevState) => prevState + 1)
+        setIndex((prevState) => prevState + 1)
       }
     
     }
 
     const prevSlide = ()=>
     {
-      ()=>setIndex((prevState) => prevState - 1)
+      if(index === 0)
+      {
+        setIndex(upcomingMovies.length -1)
+      } 
+      else
+      {setIndex((prevState) => prevState - 1)}
+
     }
 
   return (
@@ -49,6 +55,11 @@ function Slider() {
     <div className="slider-overlay"></div>
     <MdKeyboardArrowLeft className='left-arrow' onClick={prevSlide}/>
     <MdKeyboardArrowRight className='right-arrow' onClick={nextSlide}/>
+    <div className="slider-info">
+      <h1>{upcomingMovies[index]?.title}</h1>
+      <p className='slider-description'>{upcomingMovies[index]?.overview.slice(0, 130)}...</p>
+      <p>Release Date: {upcomingMovies[index]?.release_date}</p>
+    </div>
     </div>
   )
 }
